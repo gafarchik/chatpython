@@ -1,13 +1,13 @@
 [app]
 
 # (str) Title of your application
-title = alexandriya_Chat
+title = Chat
 
 # (str) Package name
-package.name = alexandriya
+package.name = chat
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = google.com
+package.domain = org.test
 
 # (str) Source code where the main.py live
 source.dir = .
@@ -37,12 +37,11 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3==3.9.11,hostpython3==3.9.11,kivy,android.permissions 
+requirements = python3,kivy,android.permissions
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
 # requirements.source.kivy = ../../kivy
-# requirements.source.hostpython3 = ../../Python-3.9.11
 
 # (str) Presplash of the application
 #presplash.filename = %(source.dir)s/data/presplash.png
@@ -64,10 +63,10 @@ orientation = portrait
 # author = © Copyright Info
 
 # change the major version of python used by the app
-osx.python_version = 3.9
+osx.python_version = 3
 
 # Kivy version to use
-osx.kivy_version = 2.1.0
+osx.kivy_version = 1.9.1
 
 #
 # Android specific
@@ -94,7 +93,7 @@ fullscreen = 0
 #icon.adaptive_background.filename = %(source.dir)s/data/icon_bg.png
 
 # (list) Permissions
-#android.permissions = INTERNET,ACCESS_NETWORK_STATE,ACCESS_WIFI_STATE
+android.permissions = INTERNET,ACCESS_NETWORK_STATE,ACCESS_WIFI_STATE
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
@@ -103,13 +102,13 @@ fullscreen = 0
 #android.api = 27
 
 # (int) Minimum API your APK / AAB will support.
-#android.minapi = 22
+#android.minapi = 21
 
 # (int) Android SDK version to use
 #android.sdk = 20
 
 # (str) Android NDK version to use
-#android.ndk = 19c
+#android.ndk = 19b
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
 #android.ndk_api = 21
@@ -118,13 +117,13 @@ fullscreen = 0
 #android.private_storage = True
 
 # (str) Android NDK directory (if empty, it will be automatically downloaded.)
-#android.ndk_path = /Users/gafarchik/.buildozer/android/platform/android-ndk-r19c
+#android.ndk_path =
 
 # (str) Android SDK directory (if empty, it will be automatically downloaded.)
-#android.sdk_path = /Users/gafarchik/.buildozer/android/platform/android-sdk
+#android.sdk_path =
 
 # (str) ANT directory (if empty, it will be automatically downloaded.)
-#android.ant_path = /Users/gafarchik/.buildozer/android/platform/apache-ant-1.9.4
+#android.ant_path =
 
 # (bool) If True, then skip trying to update the Android sdk
 # This can be useful to avoid excess Internet downloads or save time
@@ -307,7 +306,7 @@ android.allow_backup = True
 #p4a.source_dir =
 
 # (str) The directory in which python-for-android should look for your own build recipes (if any)
-p4a.local_recipes = %(source.dir)s/opt/homebrew/lib/python3.9/site-packages/pythonforandroidid/recipes
+#p4a.local_recipes =
 
 # (str) Filename to the hook for p4a
 #p4a.hook =
