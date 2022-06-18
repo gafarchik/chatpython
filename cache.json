@@ -1,0 +1,9 @@
+{
+	"Lang": {"Lang": 0}, 
+	"usr_name": {"name": "New user"}, 
+	"first_list_elem": {"name": " ", "ip": " "}, 
+	"second_list_elem": {"name": " ", "ip": " "},
+	 "third_list_elem": {"name": " ", "ip": " "}, 
+	 "fourth_list_elem": {"name": " ", "ip": " "}, 
+	 "fifth_list_elem": {"name": " ", "ip": " "}
+}
