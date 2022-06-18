@@ -18,6 +18,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 
 
 
+
 text_new_chat = "New Chat"
 text_chats = "Chats"
 text_settings = "Settings"
@@ -84,6 +85,8 @@ hist_name_dist_r = hist_name_dist[::-1]
 hist_ip_dist_r = hist_ip_dist[::-1]
 
 nl = 0
+check = 0
+
 ui_text = ("""
 <Context>:
         Widget:
@@ -612,7 +615,8 @@ class Context(Screen):
             s.connect(("8.8.8.8", 80)) 
             self.IP = s.getsockname()[0]
             s.close()
-            self.wait_client(1)
+            self.openchat()
+            Clock.schedule_interval(self.wait_client,0.2)
         except Exception as e:
             pass
     def send_msg(self,btnchange):
@@ -640,32 +644,39 @@ class Context(Screen):
         global clientname
         global connectstsatus
         global serverstsatus
-        try:
-            connectstsatus = 0
-            serverstsatus = 1
-            self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            self.server.bind((str(self.IP), 7777))
-            self.server.listen(1)
-            self.usr, self.addr = self.server.accept()
-            dataFromClient = self.usr.recv(4096)
-            if dataFromClient != b'':
-                self.ids.logotext.text = dataFromClient.decode()
-                clientname = dataFromClient.decode()
-            data = namevar
-            self.usr.send(data.encode())
-            hist_name_dist.pop(0)
-            hist_name_dist.append(str(clientname))
-            hist_ip_dist.pop(0)
-            hist_ip_dist.append(str(self.addr[0]))
-            self.store.put("fifth_list_elem",name=self.store.get("fourth_list_elem")["name"],ip=self.store.get("fourth_list_elem")["ip"])
-            self.store.put("fourth_list_elem",name=self.store.get("third_list_elem")["name"],ip=self.store.get("third_list_elem")["ip"])
-            self.store.put("third_list_elem",name=self.store.get("second_list_elem")["name"],ip=self.store.get("second_list_elem")["ip"])
-            self.store.put("second_list_elem",name=self.store.get("first_list_elem")["name"],ip=self.store.get("first_list_elem")["ip"])
-            self.store.put("first_list_elem",name=str(clientname),ip=str(self.addr[0]))
-            self.openchat()
-        except Exception as e:
-            pass
+        global check
+        if check == 0:
+            try:
+                connectstsatus = 0
+                serverstsatus = 1
+                self.ids.chat_text_input.disabled = 1
+                self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                self.server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                self.server.bind((str(self.IP), 7777))
+                self.server.listen(1)
+                self.server.settimeout(0.1)
+                self.usr, self.addr = self.server.accept()
+                dataFromClient = self.usr.recv(4096)
+                if dataFromClient != b'':
+                    self.ids.logotext.text = dataFromClient.decode()
+                    clientname = dataFromClient.decode()
+                data = namevar
+                self.usr.send(data.encode())
+                hist_name_dist.pop(0)
+                hist_name_dist.append(str(clientname))
+                hist_ip_dist.pop(0)
+                hist_ip_dist.append(str(self.addr[0]))
+                self.store.put("fifth_list_elem",name=self.store.get("fourth_list_elem")["name"],ip=self.store.get("fourth_list_elem")["ip"])
+                self.store.put("fourth_list_elem",name=self.store.get("third_list_elem")["name"],ip=self.store.get("third_list_elem")["ip"])
+                self.store.put("third_list_elem",name=self.store.get("second_list_elem")["name"],ip=self.store.get("second_list_elem")["ip"])
+                self.store.put("second_list_elem",name=self.store.get("first_list_elem")["name"],ip=self.store.get("first_list_elem")["ip"])
+                self.store.put("first_list_elem",name=str(clientname),ip=str(self.addr[0]))
+                check = 1
+                self.ids.chat_text_input.disabled = 0
+            except Exception as e:
+                Clock.schedule_interval(self.wait_client,1)
+        else:
+            Clock.unschedule(self.wait_client)
     def conn_server(self,btnchange):
         global namevar
         global clientname
